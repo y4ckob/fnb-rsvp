@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#f7f3ec" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="F'n'B" />
+<meta name="format-detection" content="telephone=no" />
+<title>F'n'B · Friday Night Beverages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%231a2e4a'/%3E%3Ctext x='90' y='112' font-family='Georgia,serif' font-size='68' fill='%23c9a961' text-anchor='middle' font-style='italic'%3EF%3C/text%3E%3C/svg%3E" />
+<style>
+  :root {
+    --navy: #1a2e4a;
+    --navy-deep: #0f1e33;
+    --cream: #f7f3ec;
+    --cream-warm: #efe7d6;
+    --gold: #c9a961;
+    --gold-soft: #d4b878;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --line: rgba(26, 46, 74, 0.12);
+    --shadow-soft: 0 1px 2px rgba(15, 30, 51, 0.04), 0 8px 24px rgba(15, 30, 51, 0.06);
+    --shadow-lift: 0 2px 4px rgba(15, 30, 51, 0.06), 0 16px 48px rgba(15, 30, 51, 0.12);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  html {
+    background: var(--cream);
+  }
+
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(201, 169, 97, 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(26, 46, 74, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+  }
+
+  .shell {
+    position: relative;
+    z-index: 1;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    text-align: center;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  .kicker {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 28px;
+  }
+
+  .brand::before, .brand::after {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--navy);
+    opacity: 0.3;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(38px, 9vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+
+  .dateline {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 20px;
+  }
+
+  .dateline span.dot {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin: 0 10px;
+    vertical-align: middle;
+  }
+
+  main {
+    padding-top: 40px;
+    flex: 1;
+  }
+
+  .stage {
+    animation: fadeUp 0.7s ease-out 0.1s both;
+  }
+
+  .stage.hidden { display: none; }
+
+  .intro {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .field {
+    margin-bottom: 24px;
+  }
+
+  input[type="text"], input[type="email"], input[type="number"], textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--ink);
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.15);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 72px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+  }
+
+  .status-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .status-option {
+    position: relative;
+  }
+
+  .status-option input { position: absolute; opacity: 0; pointer-events: none; }
+
+  .status-option label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 12px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .status-option label:hover {
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .status-option input:checked + label {
+    background: var(--navy);
+    color: var(--cream);
+    border-color: var(--navy);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .status-option input:checked + label::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-right: 10px;
+  }
+
+  .counter {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    padding: 10px 0;
+  }
+
+  .counter button {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--line);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Fraunces', serif;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+  }
+
+  .counter button:hover:not(:disabled) {
+    border-color: var(--gold);
+    background: white;
+    transform: scale(1.05);
+  }
+
+  .counter button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .counter-value {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--navy);
+    min-width: 48px;
+    text-align: center;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 18px 24px;
+    background: var(--navy);
+    color: var(--cream);
+    border: none;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: 16px;
+    position: relative;
+    overflow: hidden;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(201, 169, 97, 0.25) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.7s ease;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: var(--navy-deep);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .btn-primary:hover::before { transform: translateX(100%); }
+
+  .btn-primary:disabled { opacity: 0.6; cursor: wait; }
+
+  .btn-text {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+  }
+
+  .btn-text:hover { color: var(--gold); }
+
+  .when-banner {
+    padding: 22px 20px;
+    background: rgba(201, 169, 97, 0.08);
+    border-left: 2px solid var(--gold);
+    border-radius: 2px;
+    margin-bottom: 28px;
+    text-align: center;
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .when-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .when-time {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+  }
+
+  .confirmation {
+    text-align: center;
+    padding: 40px 0;
+  }
+
+  .confirmation-mark {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .confirmation-mark svg {
+    stroke: var(--gold);
+    stroke-width: 2.5;
+    fill: none;
+    animation: drawCheck 0.5s ease-out 0.2s both;
+  }
+
+  .confirmation h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 32px;
+    color: var(--navy);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .confirmation .sub {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+
+  .summary-card {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 24px;
+    text-align: left;
+    backdrop-filter: blur(8px);
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+
+  .summary-row:last-child { border-bottom: none; }
+
+  .summary-row .k {
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .summary-row .v {
+    font-family: 'Fraunces', serif;
+    color: var(--navy);
+    font-size: 15px;
+  }
+
+  footer {
+    margin-top: auto;
+    padding-top: 48px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  footer .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 16px;
+    opacity: 0.5;
+  }
+
+  .error {
+    color: #b8456b;
+    font-size: 13px;
+    margin-top: 8px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    animation: fadeIn 0.3s;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes drawCheck {
+    from { stroke-dasharray: 30; stroke-dashoffset: 30; }
+    to { stroke-dasharray: 30; stroke-dashoffset: 0; }
+  }
+
+  @media (max-width: 420px) {
+    .shell { padding: 32px 20px 60px; }
+    header { padding-bottom: 32px; }
+    main { padding-top: 32px; }
+    .status-group { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <header>
+    <div class="kicker">Friends Only</div>
+    <h1>F<em>'n'</em>B</h1>
+    <div class="dateline">
+      Friday Night Beverages<span class="dot"></span>Kerobokan
+    </div>
+  </header>
+
+  <main>
+
+    <div class="stage" id="stage-identify">
+      <p class="intro">Drinks, music, good people.</p>
+
+      <div class="field">
+        <label class="label" for="name-input">Your Name</label>
+        <input type="text" id="name-input" autocomplete="name" autocapitalize="words" autocorrect="off" spellcheck="false" placeholder="First and last name" />
+        <div class="hint">So I know who to expect.</div>
+      </div>
+
+      <button class="btn-primary" onclick="lookupGuest()">Continue</button>
+    </div>
+
+    <div class="stage hidden" id="stage-rsvp">
+
+      <div class="when-banner">
+        <div class="when-label">This Friday</div>
+        <div class="when-time">17:00 — 21:00</div>
+      </div>
+
+      <div class="field">
+        <label class="label">Coming along?</label>
+        <div class="status-group">
+          <div class="status-option">
+            <input type="radio" name="status" id="s-yes" value="Yes">
+            <label for="s-yes">Yes</label>
+          </div>
+          <div class="status-option">
+            <input type="radio" name="status" id="s-maybe" value="Maybe">
+            <label for="s-maybe">Maybe</label>
+          </div>
+          <div class="status-option">
+            <input type="radio" name="status" id="s-no" value="No">
+            <label for="s-no">Can't make it</label>
+          </div>
+        </div>
+      </div>
+
+      <div id="attending-fields">
+        <div class="field">
+          <label class="label">Bringing Anyone?</label>
+          <div class="counter">
+            <button type="button" onclick="changePlusOnes(-1)" id="minus-btn">−</button>
+            <div class="counter-value" id="plus-count">0</div>
+            <button type="button" onclick="changePlusOnes(1)" id="plus-btn">+</button>
+          </div>
+          <div class="hint" style="text-align: center;">How many, not counting you.</div>
+        </div>
+
+        <div class="field" id="plus-names-field" style="display:none;">
+          <label class="label" for="plus-names">Who're you bringing?</label>
+          <input type="text" id="plus-names" autocapitalize="words" autocorrect="off" spellcheck="false" placeholder="e.g. Sarah, Tom" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="drink">Drink of Choice</label>
+          <input type="text" id="drink" autocapitalize="sentences" autocorrect="off" spellcheck="false" placeholder="So I can stock the bar — wine, negroni, kombucha, whatever." />
+        </div>
+
+        <div class="field">
+          <label class="label" for="dietary">Anything I should know?</label>
+          <textarea id="dietary" autocapitalize="sentences" placeholder="Allergies, dietary stuff, or nothing at all."></textarea>
+        </div>
+      </div>
+
+      <div id="form-error" class="error" style="display:none;"></div>
+
+      <button class="btn-primary" id="submit-btn" onclick="submitRsvp()">Send</button>
+      <button class="btn-text" onclick="goBackToIdentify()">← Not you? Go back</button>
+    </div>
+
+    <div class="stage hidden" id="stage-confirmed">
+      <div class="confirmation">
+        <div class="confirmation-mark">
+          <svg width="28" height="28" viewBox="0 0 28 28">
+            <path d="M6 14 L12 20 L22 8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 id="conf-title">See you Friday</h2>
+        <div class="sub" id="conf-sub">Can't wait.</div>
+
+        <div class="summary-card">
+          <div class="summary-row"><span class="k">Name</span><span class="v" id="sum-name"></span></div>
+          <div class="summary-row"><span class="k">Status</span><span class="v" id="sum-status"></span></div>
+          <div class="summary-row" id="sum-pax-row"><span class="k">Total Guests</span><span class="v" id="sum-pax"></span></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="divider"></div>
+    Kerobokan · Bali
+  </footer>
+
+</div>
+
+<script>
+  const CONFIG = {
+    WEBHOOK_URL: 'https://script.google.com/macros/s/AKfycbz2KQ7Iq6xwCKPVMWYW29uO3WjKQzuQ0hl7BSyLeiP0qq2Yk7rsapFMpkU-aDd0VWliMA/exec',
+    CURRENT_WEEK: 'Week 5',
+  };
+
+  let guestState = {
+    matched: false,
+    guestId: null,
+    firstName: '',
+    lastName: '',
+    business: '',
+    plusOnes: 0,
+  };
+
+  async function lookupGuest() {
+    const input = document.getElementById('name-input').value.trim();
+    if (!input) {
+      flashInput('name-input');
+      return;
+    }
+
+    const parts = input.split(/\s+/);
+    guestState.firstName = parts[0];
+    guestState.lastName = parts.slice(1).join(' ');
+
+    let match = null;
+    if (CONFIG.WEBHOOK_URL && !CONFIG.WEBHOOK_URL.includes('REPLACE')) {
+      try {
+        const url = `${CONFIG.WEBHOOK_URL}?action=lookup&name=${encodeURIComponent(input)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data && data.match) match = data.match;
+      } catch (e) {
+        console.warn('Lookup failed, continuing as new guest:', e);
+      }
+    }
+
+    if (match) {
+      guestState.matched = true;
+      guestState.guestId = match.guestId;
+      guestState.firstName = match.firstName;
+      guestState.lastName = match.lastName;
+      guestState.business = match.business;
+    } else {
+      guestState.matched = false;
+      guestState.guestId = null;
+    }
+
+    showStage('stage-rsvp');
+  }
+
+  function goBackToIdentify() {
+    showStage('stage-identify');
+    guestState = { matched: false, guestId: null, firstName: '', lastName: '', business: '', plusOnes: 0 };
+    document.getElementById('plus-count').textContent = '0';
+    document.getElementById('plus-names-field').style.display = 'none';
+    document.querySelectorAll('input[name="status"]').forEach(r => r.checked = false);
+  }
+
+  function changePlusOnes(delta) {
+    guestState.plusOnes = Math.max(0, Math.min(12, guestState.plusOnes + delta));
+    document.getElementById('plus-count').textContent = guestState.plusOnes;
+    document.getElementById('minus-btn').disabled = guestState.plusOnes === 0;
+    document.getElementById('plus-btn').disabled = guestState.plusOnes === 12;
+    document.getElementById('plus-names-field').style.display =
+      guestState.plusOnes > 0 ? 'block' : 'none';
+  }
+
+  async function submitRsvp() {
+    const status = document.querySelector('input[name="status"]:checked')?.value;
+    const errorEl = document.getElementById('form-error');
+    errorEl.style.display = 'none';
+
+    if (!status) {
+      errorEl.textContent = 'Let me know if you can make it.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    if (!guestState.matched && !guestState.firstName) {
+      errorEl.textContent = 'We need your name to add you to the book.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    const payload = {
+      action: 'rsvp',
+      week: CONFIG.CURRENT_WEEK,
+      guestId: guestState.guestId || null,
+      firstName: guestState.firstName,
+      lastName: guestState.lastName,
+      business: guestState.business || '',
+      status: status,
+      plusOnes: status === 'Yes' ? guestState.plusOnes : 0,
+      plusNames: document.getElementById('plus-names').value.trim(),
+      drink: document.getElementById('drink').value.trim(),
+      dietary: document.getElementById('dietary').value.trim(),
+      submittedAt: new Date().toISOString(),
+    };
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    let success = false;
+    if (CONFIG.WEBHOOK_URL && !CONFIG.WEBHOOK_URL.includes('REPLACE')) {
+      try {
+        await fetch(CONFIG.WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload),
+        });
+        success = true;
+      } catch (e) {
+        console.error('Submit failed:', e);
+      }
+    } else {
+      console.log('Demo submission:', payload);
+      await new Promise(r => setTimeout(r, 600));
+      success = true;
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Send';
+
+    if (success) {
+      showConfirmation(payload);
+    } else {
+      errorEl.textContent = "Something didn't send — just drop me a message instead.";
+      errorEl.style.display = 'block';
+    }
+  }
+
+  function showConfirmation(payload) {
+    document.getElementById('sum-name').textContent =
+      `${payload.firstName} ${payload.lastName}`.trim();
+    document.getElementById('sum-status').textContent =
+      payload.status === 'Yes' ? 'Coming' :
+      payload.status === 'Maybe' ? 'Maybe' : 'Not this time';
+
+    if (payload.status === 'Yes') {
+      document.getElementById('sum-pax').textContent = 1 + payload.plusOnes;
+      document.getElementById('sum-pax-row').style.display = 'flex';
+      document.getElementById('conf-title').textContent = 'See you Friday';
+      document.getElementById('conf-sub').textContent = 'Can\'t wait.';
+    } else if (payload.status === 'Maybe') {
+      document.getElementById('sum-pax-row').style.display = 'none';
+      document.getElementById('conf-title').textContent = 'Noted';
+      document.getElementById('conf-sub').textContent = 'Hope you can swing by.';
+    } else {
+      document.getElementById('sum-pax-row').style.display = 'none';
+      document.getElementById('conf-title').textContent = 'Next time';
+      document.getElementById('conf-sub').textContent = 'Thanks for the heads up.';
+    }
+
+    showStage('stage-confirmed');
+  }
+
+  function showStage(id) {
+    document.querySelectorAll('.stage').forEach(s => s.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function flashInput(id) {
+    const el = document.getElementById(id);
+    el.style.borderColor = '#b8456b';
+    el.focus();
+    setTimeout(() => el.style.borderColor = '', 1500);
+  }
+
+  document.getElementById('name-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') lookupGuest();
+  });
+
+  changePlusOnes(0);
+</script>
+
+</body>
+</html>
