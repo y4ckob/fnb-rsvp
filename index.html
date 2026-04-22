@@ -95,11 +95,18 @@
     flex-direction: column;
   }
 
-  header {
+ header {
     text-align: center;
     padding-bottom: 40px;
     border-bottom: 1px solid var(--line);
     animation: fadeUp 0.8s ease-out;
+  }
+
+  /* When the identify stage is shown, the header feels less clinical without
+     a hard divider — it blends into the centred content below. */
+  body:has(#stage-identify:not(.hidden)) header {
+    border-bottom: none;
+    padding-bottom: 24px;
   }
 
   .kicker {
@@ -168,13 +175,30 @@
     vertical-align: middle;
   }
 
+ /* Main content */
   main {
     padding-top: 40px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .stage {
     animation: fadeUp 0.7s ease-out 0.1s both;
+  }
+
+  /* Stage 1 (identify) gets centred vertically with extra breathing room.
+     Stage 2 and 3 keep top-alignment because their content is denser. */
+  .stage#stage-identify {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 0 60px;
+  }
+
+  .stage#stage-identify .intro {
+    margin-bottom: 48px;
   }
 
   .stage.hidden { display: none; }
