@@ -181,8 +181,6 @@
     animation: fadeUp 0.7s ease-out 0.1s both;
   }
 
-  /* Stage 1 (identify) gets centred vertically with extra breathing room.
-     Stage 2 and 3 keep top-alignment because their content is denser. */
   .stage#stage-identify {
     flex: 1;
     display: flex;
@@ -690,9 +688,26 @@
 
 <script>
   const CONFIG = {
-    WEBHOOK_URL: 'https://script.google.com/macros/s/AKfycbz2KQ7Iq6xwCKPVMWYW29uO3WjKQzuQ0hl7BSyLeiP0qq2Yk7rsapFMpkU-aDd0VWliMA/exec',
-    CURRENT_WEEK: 'Week 5',
+    WEBHOOK_URL: 'https://script.google.com/macros/s/AKfycbwfh2cCpJrmd2dzTJvpOdkW9jtwsh_mJb7t0sf8bva8Pd9Efah6EEnF51Ftuxvpo81LHQ/exec',
+    CURRENT_WEEK: 'Week 5', // fallback — overwritten by fetchCurrentWeek() on load
   };
+
+  // Fetch the current active week from the sheet on page load
+  async function fetchCurrentWeek() {
+    try {
+      const url = `${CONFIG.WEBHOOK_URL}?action=currentWeek`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data && data.currentWeek) {
+        CONFIG.CURRENT_WEEK = data.currentWeek;
+        console.log('Active week:', CONFIG.CURRENT_WEEK);
+      }
+    } catch (e) {
+      console.warn('Could not fetch current week, using fallback:', CONFIG.CURRENT_WEEK);
+    }
+  }
+
+  fetchCurrentWeek();
 
   let guestState = {
     matched: false,
