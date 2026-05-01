@@ -51,16 +51,19 @@
   }
 
   html {
+    /* Ensure cream colour extends under any overscroll on iOS */
     background: var(--cream);
   }
 
   body {
+    /* Respect iPhone notch + home indicator */
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
 
+  /* Texture and atmosphere */
   body::before {
     content: '';
     position: fixed;
@@ -90,12 +93,12 @@
     margin: 0 auto;
     padding: 110px 24px 80px;
     min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100dvh; /* Accounts for iOS Safari URL bar */
     display: flex;
     flex-direction: column;
   }
 
- /* Header */
+  /* Header */
   header {
     text-align: center;
     padding-bottom: 56px;
@@ -169,7 +172,7 @@
     vertical-align: middle;
   }
 
- /* Main content */
+  /* Main content */
   main {
     padding-top: 40px;
     flex: 1;
@@ -181,6 +184,8 @@
     animation: fadeUp 0.7s ease-out 0.1s both;
   }
 
+  /* Stage 1 (identify) gets centred vertically with extra breathing room.
+     Stage 2 and 3 keep top-alignment because their content is denser. */
   .stage#stage-identify {
     flex: 1;
     display: flex;
@@ -227,7 +232,7 @@
     border: 1px solid var(--line);
     border-radius: 4px;
     font-family: 'Inter', sans-serif;
-    font-size: 16px;
+    font-size: 16px; /* Must be 16px+ to prevent iOS Safari zoom on focus */
     color: var(--ink);
     transition: all 0.25s ease;
     backdrop-filter: blur(8px);
@@ -257,6 +262,7 @@
     font-family: 'Fraunces', serif;
   }
 
+  /* Status pills */
   .status-group {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -311,6 +317,7 @@
     margin-right: 10px;
   }
 
+  /* Counter */
   .counter {
     display: flex;
     align-items: center;
@@ -356,6 +363,7 @@
     text-align: center;
   }
 
+  /* Primary button */
   .btn-primary {
     width: 100%;
     padding: 18px 24px;
@@ -416,6 +424,7 @@
 
   .btn-text:hover { color: var(--gold); }
 
+  /* When banner (stage 2 hero) */
   .when-banner {
     padding: 22px 20px;
     background: rgba(201, 169, 97, 0.08);
@@ -444,6 +453,95 @@
     color: var(--navy);
   }
 
+  /* Welcome back greeting */
+  .welcome-back {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--navy);
+    text-align: center;
+    margin-bottom: 24px;
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .welcome-back .wb-name {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .welcome-back.hidden { display: none; }
+
+  /* Pre-fill summary card */
+  .prefill-card {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px 22px;
+    margin-bottom: 28px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .prefill-card.hidden { display: none; }
+
+  .prefill-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+
+  .prefill-row:last-of-type { border-bottom: none; }
+
+  .prefill-row.hidden { display: none; }
+
+  .prefill-k {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .prefill-v {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    color: var(--navy);
+    font-size: 15px;
+    text-align: right;
+    word-break: break-word;
+  }
+
+  .prefill-edit {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    text-align: center;
+    padding: 14px 0 4px;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+    border-top: 1px solid var(--line);
+  }
+
+  .prefill-edit:hover { color: var(--navy); }
+
+  /* Confirmation */
   .confirmation {
     text-align: center;
     padding: 40px 0;
@@ -520,6 +618,7 @@
     font-size: 15px;
   }
 
+  /* Footer */
   footer {
     margin-top: auto;
     padding-top: 48px;
@@ -538,6 +637,7 @@
     opacity: 0.5;
   }
 
+  /* Error state */
   .error {
     color: #b8456b;
     font-size: 13px;
@@ -547,6 +647,7 @@
     animation: fadeIn 0.3s;
   }
 
+  /* Animations */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
@@ -567,6 +668,7 @@
     to { stroke-dasharray: 30; stroke-dashoffset: 0; }
   }
 
+  /* Mobile refinements */
   @media (max-width: 420px) {
     .shell { padding: 32px 20px 60px; }
     header { padding-bottom: 32px; }
@@ -589,6 +691,7 @@
 
   <main>
 
+    <!-- STAGE 1: Identify -->
     <div class="stage" id="stage-identify">
       <p class="intro">Drinks, music, good people.</p>
 
@@ -601,11 +704,30 @@
       <button class="btn-primary" onclick="lookupGuest()">Continue</button>
     </div>
 
+    <!-- STAGE 2: RSVP -->
     <div class="stage hidden" id="stage-rsvp">
 
       <div class="when-banner">
         <div class="when-label">This Friday</div>
         <div class="when-time">17:00 — 21:00</div>
+      </div>
+
+      <!-- Welcome back greeting (returning guests only) -->
+      <div id="welcome-back" class="welcome-back hidden">
+        <span class="wb-greet">Hey </span><span class="wb-name" id="wb-name"></span><span class="wb-greet">.</span>
+      </div>
+
+      <!-- Pre-fill summary card (returning guests with past submission only) -->
+      <div id="prefill-card" class="prefill-card hidden">
+        <div class="prefill-row" id="prefill-drink-row">
+          <span class="prefill-k">Drink</span>
+          <span class="prefill-v" id="prefill-drink"></span>
+        </div>
+        <div class="prefill-row" id="prefill-dietary-row">
+          <span class="prefill-k">Allergies</span>
+          <span class="prefill-v" id="prefill-dietary"></span>
+        </div>
+        <button type="button" class="prefill-edit" onclick="expandFields()">Anything different? Tap to edit</button>
       </div>
 
       <div class="field">
@@ -642,12 +764,12 @@
           <input type="text" id="plus-names" autocapitalize="words" autocorrect="off" spellcheck="false" placeholder="e.g. Sarah, Tom" />
         </div>
 
-        <div class="field">
+        <div class="field" id="drink-field">
           <label class="label" for="drink">Drink of Choice</label>
           <input type="text" id="drink" autocapitalize="sentences" autocorrect="off" spellcheck="false" placeholder="So I can stock the bar — wine, negroni, kombucha, whatever." />
         </div>
 
-        <div class="field">
+        <div class="field" id="dietary-field">
           <label class="label" for="dietary">Anything I should know?</label>
           <textarea id="dietary" autocapitalize="sentences" placeholder="Allergies, dietary stuff, or nothing at all."></textarea>
         </div>
@@ -659,6 +781,7 @@
       <button class="btn-text" onclick="goBackToIdentify()">← Not you? Go back</button>
     </div>
 
+    <!-- STAGE 3: Confirmed -->
     <div class="stage hidden" id="stage-confirmed">
       <div class="confirmation">
         <div class="confirmation-mark">
@@ -687,27 +810,16 @@
 </div>
 
 <script>
+  // =========================================================================
+  // CONFIG — edit these two values after deploying your Apps Script webhook
+  // =========================================================================
   const CONFIG = {
-    WEBHOOK_URL: 'https://script.google.com/macros/s/AKfycbwfh2cCpJrmd2dzTJvpOdkW9jtwsh_mJb7t0sf8bva8Pd9Efah6EEnF51Ftuxvpo81LHQ/exec',
-    CURRENT_WEEK: 'Week 5', // fallback — overwritten by fetchCurrentWeek() on load
+    // Paste the web-app URL from Google Apps Script here (see deployment guide)
+    WEBHOOK_URL: 'https://script.google.com/macros/s/AKfycbz2KQ7Iq6xwCKPVMWYW29uO3WjKQzuQ0hl7BSyLeiP0qq2Yk7rsapFMpkU-aDd0VWliMA/exec',
+    // Set this to the current week tab, e.g. "Week 5", "Week 6" etc.
+    CURRENT_WEEK: 'Week 6',
   };
-
-  // Fetch the current active week from the sheet on page load
-  async function fetchCurrentWeek() {
-    try {
-      const url = `${CONFIG.WEBHOOK_URL}?action=currentWeek`;
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data && data.currentWeek) {
-        CONFIG.CURRENT_WEEK = data.currentWeek;
-        console.log('Active week:', CONFIG.CURRENT_WEEK);
-      }
-    } catch (e) {
-      console.warn('Could not fetch current week, using fallback:', CONFIG.CURRENT_WEEK);
-    }
-  }
-
-  fetchCurrentWeek();
+  // =========================================================================
 
   let guestState = {
     matched: false,
@@ -716,6 +828,12 @@
     lastName: '',
     business: '',
     plusOnes: 0,
+    // Returning-guest pre-fill state
+    hasHistory: false,        // true when matched guest has past submission
+    fieldsExpanded: false,    // true when user taps "edit" or it's a new guest
+    prefillDrink: '',
+    prefillDietary: '',
+    prefillPlusNames: '',
   };
 
   async function lookupGuest() {
@@ -729,6 +847,8 @@
     guestState.firstName = parts[0];
     guestState.lastName = parts.slice(1).join(' ');
 
+    // Try the lookup — if webhook not configured, fall through gracefully to
+    // "new guest" mode so the form still works.
     let match = null;
     if (CONFIG.WEBHOOK_URL && !CONFIG.WEBHOOK_URL.includes('REPLACE')) {
       try {
@@ -747,20 +867,116 @@
       guestState.firstName = match.firstName;
       guestState.lastName = match.lastName;
       guestState.business = match.business;
+
+      // Show welcome-back greeting for matched guests
+      document.getElementById('wb-name').textContent = match.firstName;
+      document.getElementById('welcome-back').classList.remove('hidden');
+
+      // If they have a past submission, render the prefill card and collapse fields
+      if (match.lastSubmission) {
+        const ls = match.lastSubmission;
+        guestState.hasHistory = true;
+        guestState.fieldsExpanded = false;
+        // Plus-ones reset every week — guest brings different people each time
+        guestState.plusOnes = 0;
+        guestState.prefillDrink = ls.drink || '';
+        guestState.prefillDietary = ls.dietary || '';
+        guestState.prefillPlusNames = '';
+
+        renderPrefillCard(ls);
+        collapseFields();
+      } else {
+        guestState.hasHistory = false;
+        guestState.fieldsExpanded = true;
+        document.getElementById('prefill-card').classList.add('hidden');
+        document.getElementById('drink-field').style.display = '';
+        document.getElementById('dietary-field').style.display = '';
+      }
     } else {
       guestState.matched = false;
       guestState.guestId = null;
+      guestState.hasHistory = false;
+      guestState.fieldsExpanded = true;
+      document.getElementById('welcome-back').classList.add('hidden');
+      document.getElementById('prefill-card').classList.add('hidden');
+      document.getElementById('drink-field').style.display = '';
+      document.getElementById('dietary-field').style.display = '';
     }
 
     showStage('stage-rsvp');
   }
 
+  /**
+   * Populate the prefill card with last-submission values.
+   * Only drink and dietary are remembered — plus-ones reset weekly.
+   * Hides individual rows that have no value (e.g. no allergies last time).
+   */
+  function renderPrefillCard(ls) {
+    const card = document.getElementById('prefill-card');
+
+    // Drink row
+    const drinkRow = document.getElementById('prefill-drink-row');
+    if (ls.drink) {
+      document.getElementById('prefill-drink').textContent = ls.drink;
+      drinkRow.classList.remove('hidden');
+    } else {
+      drinkRow.classList.add('hidden');
+    }
+
+    // Dietary row
+    const dietaryRow = document.getElementById('prefill-dietary-row');
+    if (ls.dietary) {
+      document.getElementById('prefill-dietary').textContent = ls.dietary;
+      dietaryRow.classList.remove('hidden');
+    } else {
+      dietaryRow.classList.add('hidden');
+    }
+
+    card.classList.remove('hidden');
+  }
+
+  /**
+   * Hide only the drink + dietary fields (the prefilled ones).
+   * Status pills and +1 counter stay visible — those need fresh input every week.
+   */
+  function collapseFields() {
+    document.getElementById('drink-field').style.display = 'none';
+    document.getElementById('dietary-field').style.display = 'none';
+  }
+
+  /**
+   * Called when the user taps "Anything different? Tap to edit".
+   * Reveals the drink + dietary fields, pre-populates them with previous values,
+   * and hides the prefill card.
+   */
+  function expandFields() {
+    guestState.fieldsExpanded = true;
+    document.getElementById('prefill-card').classList.add('hidden');
+    document.getElementById('drink-field').style.display = '';
+    document.getElementById('dietary-field').style.display = '';
+
+    // Pre-populate with previous values so user only edits what's changed
+    document.getElementById('drink').value = guestState.prefillDrink || '';
+    document.getElementById('dietary').value = guestState.prefillDietary || '';
+  }
+
   function goBackToIdentify() {
     showStage('stage-identify');
-    guestState = { matched: false, guestId: null, firstName: '', lastName: '', business: '', plusOnes: 0 };
+    guestState = {
+      matched: false, guestId: null, firstName: '', lastName: '', business: '',
+      plusOnes: 0, hasHistory: false, fieldsExpanded: false,
+      prefillDrink: '', prefillDietary: '', prefillPlusNames: '',
+    };
     document.getElementById('plus-count').textContent = '0';
     document.getElementById('plus-names-field').style.display = 'none';
     document.querySelectorAll('input[name="status"]').forEach(r => r.checked = false);
+    document.getElementById('drink').value = '';
+    document.getElementById('dietary').value = '';
+    document.getElementById('plus-names').value = '';
+    document.getElementById('welcome-back').classList.add('hidden');
+    document.getElementById('prefill-card').classList.add('hidden');
+    document.getElementById('drink-field').style.display = '';
+    document.getElementById('dietary-field').style.display = '';
   }
 
   function changePlusOnes(delta) {
@@ -789,6 +1005,17 @@
       return;
     }
 
+    // For returning guests who haven't tapped Edit, use their previous drink
+    // and dietary values. Plus-ones always come from the live counter since
+    // they reset every week.
+    const useFields = guestState.fieldsExpanded || !guestState.hasHistory;
+    const drink = useFields
+      ? document.getElementById('drink').value.trim()
+      : guestState.prefillDrink;
+    const dietary = useFields
+      ? document.getElementById('dietary').value.trim()
+      : guestState.prefillDietary;
+
     const payload = {
       action: 'rsvp',
       week: CONFIG.CURRENT_WEEK,
@@ -799,8 +1026,8 @@
       status: status,
       plusOnes: status === 'Yes' ? guestState.plusOnes : 0,
       plusNames: document.getElementById('plus-names').value.trim(),
-      drink: document.getElementById('drink').value.trim(),
-      dietary: document.getElementById('dietary').value.trim(),
+      drink: drink,
+      dietary: dietary,
       submittedAt: new Date().toISOString(),
     };
 
@@ -811,6 +1038,7 @@
     let success = false;
     if (CONFIG.WEBHOOK_URL && !CONFIG.WEBHOOK_URL.includes('REPLACE')) {
       try {
+        // Use text/plain to avoid a CORS preflight against Apps Script
         await fetch(CONFIG.WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -821,6 +1049,7 @@
         console.error('Submit failed:', e);
       }
     } else {
+      // Demo mode — no webhook configured
       console.log('Demo submission:', payload);
       await new Promise(r => setTimeout(r, 600));
       success = true;
@@ -875,10 +1104,12 @@
     setTimeout(() => el.style.borderColor = '', 1500);
   }
 
+  // Enter key on name input = continue
   document.getElementById('name-input').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') lookupGuest();
   });
 
+  // Initialise counter state
   changePlusOnes(0);
 </script>
 
