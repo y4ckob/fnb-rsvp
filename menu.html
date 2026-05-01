@@ -210,10 +210,10 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Wine-list two-column price (glass / bottle) */
+  /* Wine-list two-column price (glass / bottle) — fixed-width centred columns */
   .item-prices-double {
     display: flex;
-    gap: 28px;
+    gap: 0;
     font-family: 'Fraunces', serif;
     font-weight: 400;
     font-size: 16px;
@@ -222,8 +222,8 @@
   }
 
   .item-prices-double .price-col {
-    min-width: 36px;
-    text-align: right;
+    width: 64px;
+    text-align: center;
   }
 
   .item-prices-double .price-col.empty {
@@ -242,7 +242,7 @@
 
   .price-headers .label-pair {
     display: flex;
-    gap: 28px;
+    gap: 0;
     font-family: 'Inter', sans-serif;
     font-size: 9px;
     font-weight: 500;
@@ -253,8 +253,8 @@
   }
 
   .price-headers .label-pair span {
-    min-width: 36px;
-    text-align: right;
+    width: 64px;
+    text-align: center;
   }
 
   /* Spirits prose — flowing list of bottle names, centred */
@@ -388,8 +388,8 @@
     section { padding: 40px 0 24px; }
     .item { padding: 12px 0; }
     .item-name { font-size: 16px; }
-    .item-prices-double { gap: 20px; }
-    .price-headers .label-pair { gap: 20px; }
+    .item-prices-double .price-col { width: 56px; }
+    .price-headers .label-pair span { width: 56px; }
   }
 </style>
 </head>
