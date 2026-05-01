@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#f7f3ec" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="F'n'B Menu" />
+<meta name="format-detection" content="telephone=no" />
+<title>The Bar · F'n'B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2e4a;
+    --navy-deep: #0f1e33;
+    --cream: #f7f3ec;
+    --cream-warm: #efe7d6;
+    --gold: #c9a961;
+    --gold-soft: #d4b878;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --line: rgba(26, 46, 74, 0.12);
+    --line-soft: rgba(26, 46, 74, 0.06);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Atmosphere — same as form page */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(201, 169, 97, 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(26, 46, 74, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+  }
+
+  .shell {
+    position: relative;
+    z-index: 1;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 110px 24px 80px;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--line);
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  .kicker {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(56px, 14vw, 84px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+    /* Breathing room around the apostrophes so they don't kiss the F and B */
+    padding: 0 0.08em;
+    letter-spacing: 0.02em;
+  }
+
+  /* Sections */
+  section {
+    padding: 64px 0 16px;
+    animation: fadeUp 0.7s ease-out 0.1s both;
+  }
+
+  section:first-of-type {
+    padding-top: 56px;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    text-align: center;
+    margin-bottom: 32px;
+    position: relative;
+    padding-top: 18px;
+  }
+
+  .section-title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  /* Item rows */
+  .item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .item:last-child {
+    border-bottom: none;
+  }
+
+  .item-main {
+    min-width: 0;
+  }
+
+  .item-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  .item-name em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .item-detail {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.01em;
+  }
+
+  .item-price {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--navy);
+    text-align: right;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Wine-list two-column price (glass / bottle) */
+  .item-prices-double {
+    display: flex;
+    gap: 28px;
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .item-prices-double .price-col {
+    min-width: 36px;
+    text-align: right;
+  }
+
+  .item-prices-double .price-col.empty {
+    color: var(--line);
+  }
+
+  .price-headers {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 16px;
+    padding: 0 0 10px;
+    border-bottom: 1px solid var(--line-soft);
+    margin-bottom: 8px;
+  }
+
+  .price-headers .label-pair {
+    display: flex;
+    gap: 28px;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  .price-headers .label-pair span {
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* Spirits prose — flowing list of bottle names, centred */
+  .spirits-list {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.7;
+    padding: 8px 4px;
+    letter-spacing: 0.01em;
+  }
+
+  /* Snacks — single line note */
+  .snacks-note {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    padding: 8px 4px;
+    letter-spacing: 0.01em;
+  }
+
+  /* Subsection inside a section */
+  .subsection {
+    margin-top: 28px;
+  }
+
+  .subsection-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  /* Special offer row */
+  .offer {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--gold);
+    padding: 18px 0 6px;
+    margin-top: 8px;
+    border-top: 1px solid var(--line-soft);
+    letter-spacing: 0.02em;
+  }
+
+  /* Section divider — ornamental rule with centred diamond accent */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin: 24px auto 0;
+    max-width: 280px;
+    opacity: 0.7;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.45;
+  }
+
+  .section-divider .diamond {
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: auto;
+    padding-top: 48px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  footer .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 16px;
+    opacity: 0.5;
+  }
+
+  footer a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer a:hover {
+    color: var(--navy);
+  }
+
+  .footer-note {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 12px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile refinements */
+  @media (max-width: 420px) {
+    .shell { padding: 80px 20px 60px; }
+    header { padding-bottom: 40px; }
+    section { padding: 40px 0 24px; }
+    .item { padding: 12px 0; }
+    .item-name { font-size: 16px; }
+    .item-prices-double { gap: 20px; }
+    .price-headers .label-pair { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <header>
+    <div class="kicker">The Bar</div>
+    <h1>F<em>'n'</em>B</h1>
+  </header>
+
+  <!-- COCKTAILS -->
+  <section>
+    <div class="section-title">Cocktails</div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Negroni Classico</div>
+        <div class="item-detail">Gin · Campari · Sweet Vermouth</div>
+      </div>
+      <div class="item-price">150</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Negroni Mezcal</div>
+        <div class="item-detail">Montelobos · Campari · Sweet Vermouth</div>
+      </div>
+      <div class="item-price">165</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Boulevardier</div>
+        <div class="item-detail">Patrón Reposado · Campari · Sweet Vermouth</div>
+      </div>
+      <div class="item-price">165</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Aperol Spritz</div>
+        <div class="item-detail">Aperol · Prosecco · Soda</div>
+      </div>
+      <div class="item-price">150</div>
+    </div>
+
+    <div class="offer">Any two for 280</div>
+  </section>
+
+  <div class="section-divider"><span class="diamond"></span></div>
+
+  <!-- SPIRITS -->
+  <section>
+    <div class="section-title">Spirits & Mixers</div>
+
+    <div class="subsection">
+      <div class="subsection-title">Standard · 130</div>
+      <div class="spirits-list">
+        Skyy Vodka · Blackrock Vodka · Three Peaks Gin · Bacardi Carta Blanca · East Indies Gin · Myers's Dark Rum · Selaka Arak
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Premium · 165</div>
+      <div class="spirits-list">
+        Haku Vodka · Bulldog Gin · Malfy Originale, Rosa, Limone · Patrón Reposado · Patrón Añejo · 1800 Cristalino · Montelobos Mezcal · Flor de Caña 12
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Mixers</div>
+      <div class="spirits-list">
+        Tonic · Soda · Coke · Sprite · Ginger Ale · Ginger Beer
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><span class="diamond"></span></div>
+
+  <!-- BEER -->
+  <section>
+    <div class="section-title">Island Brewing</div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Lager</div>
+      </div>
+      <div class="item-price">70</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Summer Pale Ale</div>
+      </div>
+      <div class="item-price">75</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Small Hazy</div>
+      </div>
+      <div class="item-price">85</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Hard Seltzer</div>
+        <div class="item-detail">Mango · Lime</div>
+      </div>
+      <div class="item-price">60</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Heineken</div>
+      </div>
+      <div class="item-price">65</div>
+    </div>
+  </section>
+
+  <div class="section-divider"><span class="diamond"></span></div>
+
+  <!-- WINE -->
+  <section>
+    <div class="section-title">Wine</div>
+
+    <div class="subsection">
+      <div class="subsection-title">White</div>
+
+      <div class="price-headers">
+        <span></span>
+        <div class="label-pair"><span>Glass</span><span>Bottle</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Pinot Grigio</div>
+          <div class="item-detail">Italy</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">600</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Danzante Pinot Grigio</div>
+          <div class="item-detail">Delle Venezie, Italy</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col">130</span><span class="price-col">600</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Valdubón Verdejo</div>
+          <div class="item-detail">Rueda, Spain · 2021</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">600</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Volratz Riesling Dry</div>
+          <div class="item-detail">Rheingau · 2023</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">700</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Orube Blanco</div>
+          <div class="item-detail">Fermentado en Barrica · Rioja, Spain · 2022</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">780</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Te Mata Estate Sauvignon Blanc</div>
+          <div class="item-detail">Hawke's Bay, NZ · 2022</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col">180</span><span class="price-col">990</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Woven Stone Sauvignon Blanc</div>
+          <div class="item-detail">Ōhau, NZ · 2023</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">850</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Cloudy Bay Sauvignon Blanc</div>
+          <div class="item-detail">Marlborough, NZ · 2023</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">1,600</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Chassagne-Montrachet</div>
+          <div class="item-detail">Burgundy, France · 2017</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">3,450</span></div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Red</div>
+
+      <div class="price-headers">
+        <span></span>
+        <div class="label-pair"><span>Glass</span><span>Bottle</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">M.A.N Merlot</div>
+          <div class="item-detail">South Africa · 2021</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col">130</span><span class="price-col">600</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Maset Rioja Tempranillo</div>
+          <div class="item-detail">Spain · 2021</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col">150</span><span class="price-col">700</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Mount Brown Pinot Noir</div>
+          <div class="item-detail">North Canterbury, NZ · 2021</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">700</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Valdubón Tempranillo</div>
+          <div class="item-detail">Ribera del Duero, Spain · 2021</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">780</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Valdubón Tempranillo</div>
+          <div class="item-detail">Ribera del Duero, Spain · 2019</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">850</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Lavau Côtes du Rhône</div>
+          <div class="item-detail">France · 2021</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">950</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Cloudy Bay Pinot Noir</div>
+          <div class="item-detail">Marlborough, NZ · 2022</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">1,600</span></div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Rosé</div>
+
+      <div class="price-headers">
+        <span></span>
+        <div class="label-pair"><span>Glass</span><span>Bottle</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Black Cottage</div>
+          <div class="item-detail">Marlborough, NZ · 2023</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col">150</span><span class="price-col">700</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Roubine</div>
+          <div class="item-detail">Provence, France · 2025</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">850</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Whispering Angel</div>
+          <div class="item-detail">Côtes de Provence, France · 2023</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">1,200</span></div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Champagne & Sparkling</div>
+
+      <div class="price-headers">
+        <span></span>
+        <div class="label-pair"><span>Glass</span><span>Bottle</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Maset Cava Brut</div>
+          <div class="item-detail">Spain</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col">150</span><span class="price-col">700</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Alba Luna Prosecco</div>
+          <div class="item-detail">Treviso, Italy</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">550</span></div>
+      </div>
+
+      <div class="item">
+        <div class="item-main">
+          <div class="item-name">Maschio Valdobbiadene Prosecco Superiore</div>
+          <div class="item-detail">Italy</div>
+        </div>
+        <div class="item-prices-double"><span class="price-col empty">—</span><span class="price-col">650</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><span class="diamond"></span></div>
+
+  <!-- SOFTS -->
+  <section>
+    <div class="section-title">Soft</div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Mineral Water</div>
+      </div>
+      <div class="item-price">35</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Soda Water</div>
+      </div>
+      <div class="item-price">40</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Harri's Ginger Beer</div>
+      </div>
+      <div class="item-price">60</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Schweppes Ginger Ale</div>
+      </div>
+      <div class="item-price">40</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Sodas</div>
+      </div>
+      <div class="item-price">40</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-name">Fresh Coconut</div>
+      </div>
+      <div class="item-price">40</div>
+    </div>
+  </section>
+
+  <div class="section-divider"><span class="diamond"></span></div>
+
+  <!-- SNACKS -->
+  <section>
+    <div class="section-title">Snacks</div>
+    <div class="snacks-note">Provided. Selection changes weekly.</div>
+  </section>
+
+  <footer>
+    <div class="footer-divider"></div>
+    <div class="footer-note">All prices in IDR thousands.</div>
+    <a href="/">← Back to RSVP</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
